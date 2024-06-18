@@ -1,0 +1,31 @@
+module LFSR_5bit(
+    input logic clk, 
+    input logic reset, 
+    input logic [4:0] seed,
+    output logic [4:0] LFSR_output
+);
+
+    logic [4:0] LFSR_reg;
+    logic XOR_tap;
+
+    // LFSR feedback
+    assign XOR_tap = LFSR_reg[0] ^ LFSR_reg[2];
+
+    // Update LFSR
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) begin
+            LFSR_reg <= seed; 
+        end else begin
+            LFSR_reg <= {LFSR_reg[3:0], XOR_tap}; 
+        end
+    end
+
+    // Output values
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) begin
+            LFSR_output <= 5'b00000; 
+            LFSR_output <= LFSR_reg;
+        end
+    end
+
+endmodule
