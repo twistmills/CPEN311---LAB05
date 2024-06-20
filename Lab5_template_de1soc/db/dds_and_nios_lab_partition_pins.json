@@ -112,6 +112,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "VGA_SYNC_N",
+					"strict" : false
+				},
+				{
 					"name" : "DRAM_ADDR[0]",
 					"strict" : false
 				},
@@ -141,10 +145,6 @@
 				},
 				{
 					"name" : "DRAM_ADDR[7]",
-					"strict" : false
-				},
-				{
-					"name" : "VGA_SYNC_N",
 					"strict" : false
 				},
 				{
