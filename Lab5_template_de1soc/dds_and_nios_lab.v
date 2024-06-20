@@ -358,17 +358,104 @@ LFSR_5_bit   LFSR_inst(
 );
 
 
+// Setup DDS Waveform 
+
+reg [31:0] tuning_word;
+wire [11:0] sin_out, cos_out, squ_out, saw_out;
+
+tuning_word_calc find_phase_inc(
+    .clk_freq(32'd50000000),      // Clock frequency in Hz
+    .desired_freq(32'd3),  // Desired frequency in Hz
+    .tuning_word(tuning_word));
+
+waveform_gen dds_inst(
+	.clk(CLOCK_50),
+	.reset(1'b1),
+	.en(1'b1),
+	.phase_inc(tuning_word),
+	.sin_out(sin_out),
+	.cos_out(cos_out),
+	.saw_out(saw_out),
+	.squ_out(squ_out));
+
+// Top Signal
+
+/*
+always @ (posedge video_clk_40Mhz)
+	casez(modulation_selector)
+		// ASK
+		4'bzz00: begin
+			actual_selected_modulation <= 
+		end
+		
+		// FSK
+		4'bzz01:
+		
+		// BPSK
+		4'bzz10:
+		
+		// LFSR
+		4'bzz11:
+		
+	
+	
+	endcase
+*/
+
+// Modulate signals according to LFSR_output[0]
+//wire [11:0] ASK_out, BPSK_out, LFSR_out;
+//
+//always @(*) begin
+//    // Amplitude-shift Keying (ASK)
+//    // Binary Phase Shift Keying (BPSK)
+//    
+//    if (LFSR_output[0]) begin
+//        // if LFSR_output[0] is HIGH
+//        ASK_out = actual_selected_modulation;
+//        BPSK_out = actual_selected_modulation;
+//			LFSR_out = 12'b0;
+//    end 
+//	else if(!LFSR_output[0]) begin
+//        // if LFSR_output[0] is LOW
+//        ASK_out = 12'b0;
+//        BPSK_out = ~actual_selected_modulation;
+//        LFSR_out = 12'b1000_0000_0000;
+//    end
+// else begin
+// ASK_out = 12'b0;
+//       BPSK_out = 12'b0;
+// LFSR_out = 12'b0;
+// end
+//end
+
+//// modulated signal output 
+//always @(posedge video_clk_40Mhz) begin
+//    case (modulation_selector[1:0])
+//        2'b00  : actual_selected_modulation = ASK_out;    // ASK modulation
+//        2'b01  : actual_selected_modulation = sin_out;    // FSK modulation (DONE ELSEWHERE)
+//        2'b10  : actual_selected_modulation = BPSK_out;   // BPSK modulation
+//        2'b11  : actual_selected_modulation = LFSR_out;   // LFSR modulation
+//        default: actual_selected_modulation = 12'b0;      // default 0
+//    endcase
+//end
 
 
+// Bottom signal 
+
+always @ (posedge video_clk_40Mhz)
+	casez(signal_selector)
+		8'bzzzzzz00: actual_selected_signal <= sin_out;
+		
+		8'bzzzzzz01: actual_selected_signal <= cos_out;
+		
+		8'bzzzzzz11: actual_selected_signal <= squ_out;
+		
+		8'bzzzzzz10: actual_selected_signal <= saw_out;
 
 
+		default: actual_selected_signal <= 12'b0;
 
-
-
-
-
-
-
+	endcase
 
 
 

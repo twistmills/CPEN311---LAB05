@@ -1,0 +1,24 @@
+module tuning_word_calc
+    input wire [31:0] clk_freq,      // Clock frequency in Hz
+    input wire [31:0] desired_freq,  // Desired frequency in Hz
+    output wire [31:0] tuning_word,
+    output wire [11:0] sin_out,
+    output wire [11:0] cos_out,
+    output wire [11:0] squ_out,
+    output wire [11:0] saw_out
+);
+
+reg [31:0] temp_tuning_word;
+
+always @(*) begin
+    temp_tuning_word = (desired_freq * (1 << 32)) / clk_freq;
+    tuning_word = temp_tuning_word + 32'd1; // Adding 0.5 and converting to integer
+end
+
+// Assignments for the output signals (placeholders for actual signal processing logic)
+assign sin_out = 12'd0; // Replace with actual sin calculation
+assign cos_out = 12'd0; // Replace with actual cos calculation
+assign squ_out = 12'd0; // Replace with actual square wave calculation
+assign saw_out = 12'd0; // Replace with actual sawtooth wave calculation
+
+endmodule

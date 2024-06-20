@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>ucosii</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>20-Jun-2024 10:56:20 AM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1718906180334</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>20-Jun-2024 2:41:59 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1718919719506</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\Users\Ryan\Documents\GitHub\CPEN311---LAB05\Lab5_template_de1soc\software\lab5_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\DE1_SoC_QSYS.sopcinfo</SopcDesignFile>
