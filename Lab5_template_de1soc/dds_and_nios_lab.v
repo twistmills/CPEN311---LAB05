@@ -338,18 +338,18 @@ DE1_SoC_QSYS U0(
 
 // Get 1Hz Signal from 50MHz using the truty ol' clock divider
 
-wire CLOCLK_1Hz; 
+wire CLOCK_1Hz; 
 
 Clock_Divider get1Hz(
-	cklock_in(CLOCK_50),
-	reset(1'b0),
-	count_end(32'd25000000),
-	clock_out(CLOCK_1Hz)
+	.clock_in(CLOCK_50),
+	.reset(1'b0),
+	.count_end(32'd25000000),
+	.clock_out(CLOCK_1Hz)
 ); 
 
 // Setup LFSR
 
-wire [4:0] LFSR_output
+wire [4:0] LFSR_output;
 
 LFSR_5_bit   LFSR_inst(
 .clk(CLOCK_1Hz),                    
