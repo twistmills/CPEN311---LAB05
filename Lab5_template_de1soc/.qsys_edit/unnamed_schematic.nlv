@@ -1,0 +1,67 @@
+# # File gsaved with Nlview version 6.3.8  2013-12-19 bk=1.2992 VDI=34 GEI=35
+# 
+preplace inst unsaved.QSYS_0.timer -pg 1
+preplace inst unsaved.QSYS_0.jtag_uart -pg 1
+preplace inst unsaved.QSYS_0.vga -pg 1
+preplace inst unsaved.QSYS_0.pll -pg 1
+preplace inst unsaved.QSYS_0.audio.clk_sys -pg 1
+preplace inst unsaved.QSYS_0 -pg 1 -lvl 1 -y 50
+preplace inst unsaved.QSYS_0.vga_clk_bridge_out -pg 1
+preplace inst unsaved.QSYS_0.audio_sel -pg 1
+preplace inst unsaved.QSYS_0.audio.OUT_STOP -pg 1
+preplace inst unsaved.QSYS_0.audio.OUT_PAUSE -pg 1
+preplace inst unsaved.QSYS_0.audio.EMPTY -pg 1
+preplace inst unsaved.QSYS_0.clk_50 -pg 1
+preplace inst unsaved.QSYS_0.key -pg 1
+preplace inst unsaved.QSYS_0.vga.nios_clk -pg 1
+preplace inst unsaved.QSYS_0.sdram -pg 1
+preplace inst unsaved.QSYS_0.modulation_selector -pg 1
+preplace inst unsaved.QSYS_0.vga.clk_50M -pg 1
+preplace inst unsaved.QSYS_0.dds_increment -pg 1
+preplace inst unsaved.QSYS_0.audio -pg 1
+preplace inst unsaved.QSYS_0.vga.alt_vip_itc_0 -pg 1
+preplace inst unsaved.QSYS_0.signal_selector -pg 1
+preplace inst unsaved.QSYS_0.cpu -pg 1
+preplace inst unsaved.QSYS_0.vga.alt_vip_vfr_0 -pg 1
+preplace inst unsaved.QSYS_0.keyboard_keys -pg 1
+preplace inst unsaved.QSYS_0.audio.WRREQ -pg 1
+preplace inst unsaved.QSYS_0.lfsr_val -pg 1
+preplace inst unsaved.QSYS_0.clk_25_in -pg 1
+preplace inst unsaved.QSYS_0.audio.fifo_used -pg 1
+preplace inst unsaved.QSYS_0.audio.WRCLK -pg 1
+preplace inst unsaved.QSYS_0.audio.FIFO_FULL -pg 1
+preplace inst unsaved.QSYS_0.audio.DATA_FREGEN -pg 1
+preplace inst unsaved.QSYS_0.div_freq -pg 1
+preplace inst unsaved.QSYS_0.sysid_qsys -pg 1
+preplace inst unsaved.QSYS_0.lfsr_clk_interrupt_gen -pg 1
+preplace inst unsaved.QSYS_0.audio.OUT_DATA_AUDIO -pg 1
+preplace inst unsaved -pg 1 -lvl 1 -y 40 -regy -20
+preplace inst unsaved.QSYS_0.vga.vga_clk -pg 1
+preplace inst unsaved.QSYS_0.mouse_pos -pg 1
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.reset,(SLAVE)QSYS_0.reset) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(MASTER)unsaved.vga_vga_clk,(MASTER)QSYS_0.vga_vga_clk) 1 1 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.vga_alt_vip_itc_0_clocked_video,(SLAVE)QSYS_0.vga_alt_vip_itc_0_clocked_video) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.sdram_wire,(SLAVE)QSYS_0.sdram_wire) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.audio2fifo_0_out_pause,(SLAVE)QSYS_0.audio2fifo_0_out_pause) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.key_external_connection,(SLAVE)QSYS_0.key_external_connection) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)QSYS_0.audio2fifo_0_out_stop,(SLAVE)unsaved.audio2fifo_0_out_stop) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)QSYS_0.modulation_selector,(SLAVE)unsaved.modulation_selector) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)QSYS_0.audio2fifo_0_data_divfrec,(SLAVE)unsaved.audio2fifo_0_data_divfrec) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.pll_locked,(SLAVE)QSYS_0.pll_locked) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(MASTER)QSYS_0.clk_25_out,(MASTER)unsaved.clk_25_out) 1 1 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.audio_sel,(SLAVE)QSYS_0.audio_sel) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)QSYS_0.lfsr_clk_interrupt_gen_external_connection,(SLAVE)unsaved.lfsr_clk_interrupt_gen_external_connection) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)QSYS_0.div_freq,(SLAVE)unsaved.div_freq) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)QSYS_0.audio2fifo_0_empty,(SLAVE)unsaved.audio2fifo_0_empty) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)QSYS_0.clk,(SLAVE)unsaved.clk) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)QSYS_0.signal_selector,(SLAVE)unsaved.signal_selector) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.audio2fifo_0_fifo_used,(SLAVE)QSYS_0.audio2fifo_0_fifo_used) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)QSYS_0.mouse_pos,(SLAVE)unsaved.mouse_pos) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(MASTER)QSYS_0.clk_sdram,(MASTER)unsaved.clk_sdram) 1 1 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.audio2fifo_0_wrreq,(SLAVE)QSYS_0.audio2fifo_0_wrreq) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)QSYS_0.keyboard_keys,(SLAVE)unsaved.keyboard_keys) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.audio2fifo_0_fifo_full,(SLAVE)QSYS_0.audio2fifo_0_fifo_full) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.audio2fifo_0_out_data_audio,(SLAVE)QSYS_0.audio2fifo_0_out_data_audio) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)QSYS_0.audio2fifo_0_wrclk,(SLAVE)unsaved.audio2fifo_0_wrclk) 1 0 1 NJ
+levelinfo -pg 1 0 240 710
+levelinfo -hier unsaved 250 460 610

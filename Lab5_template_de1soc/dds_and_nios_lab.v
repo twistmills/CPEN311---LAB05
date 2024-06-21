@@ -320,8 +320,11 @@ DE1_SoC_QSYS U0(
 	   .audio_sel_export                              (audio_selector),                               //                       audio_sel.export
 	   
        .vga_vga_clk_clk                               (video_clk_40Mhz),                               //                     vga_vga_clk.clk
-       .clk_25_out_clk                                (CLK_25MHZ)                                 //                      clk_25_out.clk
+       .clk_25_out_clk                                (CLK_25MHZ),                                 //                      clk_25_out.clk
        
+		 .lfsr_clk_interrupt_gen_external_connection_export(synced_1hz_clk),
+		 .lfsr_val_external_connection_export({31'b0, LFSR_output[0]}),
+		 .dds_increment_external_connection_export(fsk_tuning_word)
 	);
 	
  
@@ -338,7 +341,7 @@ DE1_SoC_QSYS U0(
 
 // Get 1Hz Signal from 50MHz using the truty ol' clock divider
 
-wire CLOCK_1Hz; 
+wire CLOCK_1Hz, synced_1hz_clk; 
 
 Clock_Divider get1Hz(
 	.clock_in(CLOCK_50),
@@ -346,6 +349,9 @@ Clock_Divider get1Hz(
 	.count_end(32'd25000000),
 	.clock_out(CLOCK_1Hz)
 ); 
+
+ doublesync_no_reset sync_1hz_interrupt (.indata(CLOCK_1Hz), .outdata(synced_1hz_clk), .clk(CLOCK_50));
+
 
 // Setup LFSR
 
@@ -360,13 +366,13 @@ LFSR_5_bit   LFSR_inst(
 
 // Setup DDS Waveform 
 
-reg [31:0] tuning_word;
+reg [31:0] base_tuning_word, tuning_word;
 wire [11:0] sin_out, cos_out, squ_out, saw_out;
 
 tuning_word_calc find_phase_inc(
     .clk_freq(32'd50000000),      // Clock frequency in Hz
     .desired_freq(32'd3),  // Desired frequency in Hz
-    .tuning_word(tuning_word));
+    .tuning_word(base_tuning_word));
 
 waveform_gen dds_inst(
 	.clk(CLOCK_50),
@@ -379,28 +385,6 @@ waveform_gen dds_inst(
 	.squ_out(squ_out));
 
 // Top Signal
-
-/*
-always @ (posedge video_clk_40Mhz)
-	casez(modulation_selector)
-		// ASK
-		4'bzz00: begin
-			actual_selected_modulation <= 
-		end
-		
-		// FSK
-		4'bzz01:
-		
-		// BPSK
-		4'bzz10:
-		
-		// LFSR
-		4'bzz11:
-		
-	
-	
-	endcase
-*/
 
 // Modulate signals according to LFSR_output[0]
 wire [11:0] ASK_out, BPSK_out, LFSR_out;
@@ -424,18 +408,30 @@ always @(*) begin
  else begin
 		 ASK_out = 12'b0;
        BPSK_out = 12'b0;
- LFSR_out = 12'b0;
+		 LFSR_out = 12'b0;
  end
 end
-
+reg [31:0] fsk_tuning_word;
 // modulated signal output 
 always @(posedge video_clk_40Mhz) begin
     case (modulation_selector[1:0])
-        2'b00  : actual_selected_modulation = ASK_out;    // ASK modulation
-        2'b01  : actual_selected_modulation = sin_out;    // FSK modulation (DONE ELSEWHERE)
-        2'b10  : actual_selected_modulation = BPSK_out;   // BPSK modulation
-        2'b11  : actual_selected_modulation = LFSR_out;   // LFSR modulation
-        default: actual_selected_modulation = 12'b0;      // default 0
+        2'b00  : begin
+				actual_selected_modulation <= ASK_out;    // ASK modulation
+				tuning_word <= base_tuning_word;
+			end
+        2'b01  : begin
+				tuning_word <= fsk_tuning_word;
+				actual_selected_modulation <= sin_out;    // FSK modulation (DONE ELSEWHERE)
+			end
+        2'b10  : begin
+				actual_selected_modulation <= BPSK_out;   // BPSK modulation
+				tuning_word <= base_tuning_word;
+			end
+        2'b11  : begin
+				actual_selected_modulation <= LFSR_out;   // LFSR modulation
+				tuning_word <= base_tuning_word;
+			end
+        default: actual_selected_modulation <= 12'b0;      // default 0
     endcase
 end
 
@@ -458,6 +454,44 @@ always @ (posedge video_clk_40Mhz)
 	endcase
 
 
+// FSK Implementation
+
+//DE1_SoC_QSYS_lfsr_clk_interrupt_gen interrupt_gen_inst(
+//	// inputs:
+//	.address(),
+//	.chipselect(),
+//	.clk(),
+//	.in_port(),
+//	.reset_n(),
+//	.write_n(),
+//	.writedata(),
+//	
+//	// outputs:
+//	.irq(),
+//	.readdata());	
+//	
+//DE1_SoC_QSYS_lfsr_val lfsr_val_inst(
+//	// inputs:
+//	.address(),
+//	.clk(),
+//	.in_port(),
+//	.reset_n(),
+//	
+//	// outputs:
+//	.readdata());	
+//	
+//DE1_SoC_QSYS_dds_increment dds_increment_inst(
+//	// inputs:
+//	.address(),
+//	.chipselect(),
+//	.clk(),
+//	.reset_n(),
+//	.write_n(),
+//	.writedata(),
+//	
+//	// outputs:
+//	.out_port(),
+//	.readdata());	
 
 ////////////////////////////////////////////////////////////////////
 // 
