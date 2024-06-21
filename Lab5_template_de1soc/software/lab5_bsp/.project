@@ -3,6 +3,7 @@
 	<name>ydevel00028_lab5_template_bsp</name>
 	<comment></comment>
 	<projects>
+		<project>lab5</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

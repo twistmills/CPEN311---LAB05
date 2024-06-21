@@ -13,12 +13,12 @@ module DE1_SoC_QSYS (
 	clk_clk,
 	clk_25_out_clk,
 	clk_sdram_clk,
-	dds_increment_external_connection_export,
+	dds_increment_export,
 	div_freq_export,
 	key_external_connection_export,
 	keyboard_keys_export,
-	lfsr_clk_interrupt_gen_external_connection_export,
-	lfsr_val_external_connection_export,
+	lfsr_clk_interrupt_gen_export,
+	lfsr_val_export,
 	modulation_selector_export,
 	mouse_pos_export,
 	pll_locked_export,
@@ -57,12 +57,12 @@ module DE1_SoC_QSYS (
 	input		clk_clk;
 	output		clk_25_out_clk;
 	output		clk_sdram_clk;
-	output	[31:0]	dds_increment_external_connection_export;
+	output	[31:0]	dds_increment_export;
 	output	[31:0]	div_freq_export;
 	input	[3:0]	key_external_connection_export;
 	input	[31:0]	keyboard_keys_export;
-	input		lfsr_clk_interrupt_gen_external_connection_export;
-	input	[31:0]	lfsr_val_external_connection_export;
+	input		lfsr_clk_interrupt_gen_export;
+	input	[31:0]	lfsr_val_export;
 	output	[3:0]	modulation_selector_export;
 	input	[31:0]	mouse_pos_export;
 	output		pll_locked_export;

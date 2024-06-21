@@ -469,7 +469,7 @@
    dir="start" />
  <interface name="clk_sdram" internal="pll.outclk1" type="clock" dir="start" />
  <interface
-   name="dds_increment_external_connection"
+   name="dds_increment"
    internal="dds_increment.external_connection"
    type="conduit"
    dir="end" />
@@ -489,12 +489,12 @@
    type="conduit"
    dir="end" />
  <interface
-   name="lfsr_clk_interrupt_gen_external_connection"
+   name="lfsr_clk_interrupt_gen"
    internal="lfsr_clk_interrupt_gen.external_connection"
    type="conduit"
    dir="end" />
  <interface
-   name="lfsr_val_external_connection"
+   name="lfsr_val"
    internal="lfsr_val.external_connection"
    type="conduit"
    dir="end" />
@@ -1390,13 +1390,13 @@
    kind="clock"
    version="16.1"
    start="clk_50.clk"
-   end="lfsr_clk_interrupt_gen.clk" />
+   end="dds_increment.clk" />
  <connection kind="clock" version="16.1" start="clk_50.clk" end="lfsr_val.clk" />
  <connection
    kind="clock"
    version="16.1"
    start="clk_50.clk"
-   end="dds_increment.clk" />
+   end="lfsr_clk_interrupt_gen.clk" />
  <connection kind="clock" version="16.1" start="clk_50.clk" end="vga.clk_50m" />
  <connection kind="clock" version="16.1" start="clk_50.clk" end="pll.refclk" />
  <connection
@@ -1516,7 +1516,7 @@
    kind="reset"
    version="16.1"
    start="clk_50.clk_reset"
-   end="lfsr_clk_interrupt_gen.reset" />
+   end="dds_increment.reset" />
  <connection
    kind="reset"
    version="16.1"
@@ -1526,7 +1526,7 @@
    kind="reset"
    version="16.1"
    start="clk_50.clk_reset"
-   end="dds_increment.reset" />
+   end="lfsr_clk_interrupt_gen.reset" />
  <connection
    kind="reset"
    version="16.1"

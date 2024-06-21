@@ -322,9 +322,9 @@ DE1_SoC_QSYS U0(
        .vga_vga_clk_clk                               (video_clk_40Mhz),                               //                     vga_vga_clk.clk
        .clk_25_out_clk                                (CLK_25MHZ),                                 //                      clk_25_out.clk
        
-		 .lfsr_clk_interrupt_gen_external_connection_export(synced_1hz_clk),
-		 .lfsr_val_external_connection_export({31'b0, LFSR_output[0]}),
-		 .dds_increment_external_connection_export(fsk_tuning_word)
+		 //.lfsr_clk_interrupt_gen_export(CLOCK_1Hz),
+		 //.lfsr_val_export({31'b0, LFSR_output[0]}),
+		 //.dds_increment_export(fsk_tuning_word)
 	);
 	
  
@@ -341,7 +341,7 @@ DE1_SoC_QSYS U0(
 
 // Get 1Hz Signal from 50MHz using the truty ol' clock divider
 
-wire CLOCK_1Hz, synced_1hz_clk; 
+wire CLOCK_1Hz; 
 
 Clock_Divider get1Hz(
 	.clock_in(CLOCK_50),
@@ -350,7 +350,7 @@ Clock_Divider get1Hz(
 	.clock_out(CLOCK_1Hz)
 ); 
 
- doublesync_no_reset sync_1hz_interrupt (.indata(CLOCK_1Hz), .outdata(synced_1hz_clk), .clk(CLOCK_50));
+ //doublesync_no_reset sync_1hz_interrupt (.indata(CLOCK_1Hz), .outdata(synced_1hz_clk), .clk(CLOCK_50));
 
 
 // Setup LFSR
@@ -399,35 +399,37 @@ always @(*) begin
         BPSK_out = sin_out;
 			LFSR_out = 12'b0000_0000_0000;
     end 
-	else if(!LFSR_output[0]) begin
+	 else if(!LFSR_output[0]) begin
         // if LFSR_output[0] is LOW
         ASK_out = 12'b0;
         BPSK_out = ~sin_out;
         LFSR_out = 12'b1000_0000_0000;
     end
- else begin
-		 ASK_out = 12'b0;
-       BPSK_out = 12'b0;
-		 LFSR_out = 12'b0;
- end
+    else begin
+		  ASK_out = 12'b0;
+        BPSK_out = 12'b0;
+		  LFSR_out = 12'b0;
+    end
 end
+
 reg [31:0] fsk_tuning_word;
 // modulated signal output 
 always @(posedge video_clk_40Mhz) begin
-    case (modulation_selector[1:0])
-        2'b00  : begin
+    casez (modulation_selector)
+        4'bzz00  : begin
 				actual_selected_modulation <= ASK_out;    // ASK modulation
 				tuning_word <= base_tuning_word;
 			end
-        2'b01  : begin
-				tuning_word <= fsk_tuning_word;
+        4'bzz01  : begin
+				//tuning_word <= fsk_tuning_word;
+				tuning_word <= 86;
 				actual_selected_modulation <= sin_out;    // FSK modulation (DONE ELSEWHERE)
 			end
-        2'b10  : begin
+        4'bzz10  : begin
 				actual_selected_modulation <= BPSK_out;   // BPSK modulation
 				tuning_word <= base_tuning_word;
 			end
-        2'b11  : begin
+        4'bzz11  : begin
 				actual_selected_modulation <= LFSR_out;   // LFSR modulation
 				tuning_word <= base_tuning_word;
 			end
