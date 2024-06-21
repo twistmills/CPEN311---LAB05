@@ -413,18 +413,18 @@ always @(*) begin
         // if LFSR_output[0] is HIGH
         ASK_out = sin_out;
         BPSK_out = sin_out;
-			LFSR_out = 12'b0000_0000_0000;
+        LFSR_out = 12'b0000_0000_0000;
     end 
 	else if(!LFSR_output[0]) begin
-        // if LFSR_output[0] is LOW
-        ASK_out = 12'b0;
-        BPSK_out = ~sin_out;
-        LFSR_out = 12'b1000_0000_0000;
+       // if LFSR_output[0] is LOW
+       ASK_out = 12'b0;
+       BPSK_out = ~sin_out;
+       LFSR_out = 12'b1000_0000_0000;
     end
  else begin
 		 ASK_out = 12'b0;
        BPSK_out = 12'b0;
- LFSR_out = 12'b0;
+	    LFSR_out = 12'b0;
  end
 end
 
